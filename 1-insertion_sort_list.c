@@ -10,27 +10,29 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	listint_t *crnt, *tmp;
+
+	if (!list || !(*list) || !((*list)->next))
 		return;
 
-	listint_t *crnt, tmp;
-
-	for (crnt = (*list)->next; crnt != NULL; crnt = crnt->next)
+	crnt = (*list)->next;
+	while (crnt)
 	{
 		tmp = crnt;
-		while (tmp->prev != NULL && tmp->x < tmp->prev->x)
+		while (tmp->prev && tmp->n < tmp->prev->n)
 		{
 			tmp->prev->next = tmp->next;
-			if (tmp->next != NULL)
+			if (tmp->next)
 				tmp->next->prev = tmp->prev;
 			tmp->next = tmp->prev;
 			tmp->prev = tmp->prev->prev;
 			tmp->next->prev = tmp;
-			if (tmp->prev == NULL)
-				*list = tmp;
+			if (!tmp->prev)
+				(*list) = tmp;
 			else
 				tmp->prev->next = tmp;
 			print_list(*list);
 		}
+		crnt = crnt->next;
 	}
 }
